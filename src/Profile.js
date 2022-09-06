@@ -1,10 +1,11 @@
 import React from "react";
-
+import Header from './Header.js'
 class Profile extends React.Component {
   
   render() {
     return (
-        <h1>profile Best Books</h1>
+        <Header/>
+        
     )
   }
 }
