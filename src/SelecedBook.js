@@ -50,8 +50,6 @@ class SelecedBook extends React.Component {
             </Modal.Footer>
             </Form>
           </Modal.Body>
-          
-            
         </Modal>
       </>
     );

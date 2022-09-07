@@ -6,9 +6,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Header.js";
 
 class Books extends React.Component {
-
-
-
   render() {
     return (
       <>
