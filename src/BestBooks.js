@@ -4,13 +4,16 @@ import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import "./BestBooks.css";
 import SelecedBook from "./SelecedBook";
+import SelecedBookUbdate from "./SelecedBookUbdate";
 
 class Books extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       BooksArr: [],
-      show:false
+      bookShowModal: false,
+      updateShowModal: false,
+      bookChosen: [],
     };
   }
 
@@ -61,19 +64,47 @@ class Books extends React.Component {
       });
   };
 
-  handleShow  = () => {
+  handleShow = () => {
     this.setState({
-      show:true,
-    })
-
-  }
-  handleClose=()=>{
+      bookShowModal: true,
+    });
+  };
+  handleClose = () => {
     this.setState({
-      show:false
-    })
-  }
+      bookShowModal: false,
+      updateShowModal: false,
+    });
+  };
 
+  openFormModal = (bookChosen) => {
+    this.setState({
+      updateShowModal: true,
+      bookChosen: bookChosen,
+    });
+  };
 
+  updateBook = (event) => {
+    event.preventDefault();
+    const booksObj = {
+      title: event.target.bookTitle.value,
+      description: event.target.bookDescription.value,
+      status: event.target.bookStatus.value,
+    };
+
+    const id = this.state.bookChosen._id;
+    // console.log(id);
+
+    axios
+      .put(`http://localhost:3001/updateBook/${id}`, booksObj)
+      .then((result) => {
+        this.setState({
+          BooksArr: result.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   render() {
     return (
@@ -89,12 +120,15 @@ class Books extends React.Component {
           <button type="submit">Add</button>
         </form> */}
 
-        
+        <Button variant="info" onClick={this.handleShow} id="addButton">
+          Add Book
+        </Button>
 
-        <Button variant="info" onClick={this.handleShow} id="addButton" >Add Book</Button>
-
-        <SelecedBook show={this.state.show} handleClose={this.handleClose} addBook={this.addBook} />
-
+        <SelecedBook
+          show={this.state.bookShowModal}
+          handleClose={this.handleClose}
+          addBook={this.addBook}
+        />
 
         <Carousel>
           {this.state.BooksArr.length ? (
@@ -106,17 +140,27 @@ class Books extends React.Component {
                     <h4>Book title : {item.title} </h4>
                     <p>book description: {item.description}</p>
                     <p>movie status : {item.status}</p>
-                    <button onClick={() => this.deleteBook(item._id)}>
+                    <Button onClick={() => this.deleteBook(item._id)}>
                       Delete Book
-                    </button>
+                    </Button>
+                    <Button onClick={() => this.openFormModal(item)}>
+                      Update Book
+                    </Button>
                   </Carousel.Caption>
                 </Carousel.Item>
               );
             })
           ) : (
-            <h3>No Books Found</h3>
+            <h1>No Books Found</h1>
           )}
         </Carousel>
+
+        <SelecedBookUbdate
+          show={this.state.updateShowModal}
+          handleClose={this.handleClose}
+          updateBook={this.updateBook}
+          bookChosen={this.state.bookChosen}
+        />
       </>
     );
   }

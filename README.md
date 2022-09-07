@@ -1,7 +1,7 @@
 # can-of-books-backend
 
 **Author**: farah eilouti and mohammad alghzawi
-**Version**: monogo
+**Version**: updateData
 
 # Overview
 A high end web app that enables you to see the most recommended books to read.
@@ -12,10 +12,10 @@ A high end web app that enables you to see the most recommended books to read.
 * Createt the frontend then send requst to the server
 
 # Change Log
-now user can add or delete any book he want
+now user can add or delete any book he want, this application allow the user to update data edit it
 
 # Estimates
-Name of feature: mongo
+Name of feature: updateData
 
 Estimate of time needed to complete: 3 hrs
 
