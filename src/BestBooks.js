@@ -2,20 +2,21 @@ import React from "react";
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import "./BestBooks.css";
+import SelecedBook from "./SelecedBook";
 
 class Books extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       BooksArr: [],
+      show:false
     };
   }
 
   componentDidMount = () => {
     axios
-      .get(`http://localhost:3051/books`)
+      .get(`http://localhost:3001/books`)
       .then((result) => {
         this.setState({
           BooksArr: result.data,
@@ -36,7 +37,7 @@ class Books extends React.Component {
     };
 
     axios
-      .post("http://localhost:3051/addBook", booksObj)
+      .post("http://localhost:3001/addBook", booksObj)
       .then((result) => {
         this.setState({
           BooksArr: result.data,
@@ -49,7 +50,7 @@ class Books extends React.Component {
 
   deleteBook = (id) => {
     axios
-      .delete(`http://localhost:3051/deleteBook/${id}`)
+      .delete(`http://localhost:3001/deleteBook/${id}`)
       .then((result) => {
         this.setState({
           BooksArr: result.data,
@@ -59,6 +60,20 @@ class Books extends React.Component {
         console.log(err);
       });
   };
+
+  handleShow  = () => {
+    this.setState({
+      show:true,
+    })
+
+  }
+  handleClose=()=>{
+    this.setState({
+      show:false
+    })
+  }
+
+
 
   render() {
     return (
@@ -74,35 +89,12 @@ class Books extends React.Component {
           <button type="submit">Add</button>
         </form> */}
 
-        <Form onSubmit={this.addBook}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Book Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="booktitle"
-              placeholder="Book Name"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Book Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="bookdescription"
-              placeholder="Book description"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Book Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="bookstatus"
-              placeholder="Book status"
-            />
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form.Group>
-        </Form>
+        
+
+        <Button variant="info" onClick={this.handleShow} id="addButton" >Add Book</Button>
+
+        <SelecedBook show={this.state.show} handleClose={this.handleClose} addBook={this.addBook} />
+
 
         <Carousel>
           {this.state.BooksArr.length ? (
