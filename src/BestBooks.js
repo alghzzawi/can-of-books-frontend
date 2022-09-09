@@ -20,10 +20,10 @@ class Books extends React.Component {
 
   componentDidMount = () => {
     const { user } = this.props.auth0;
-
+    console.log("env",process.env.REACT_APP_URL)
 
     axios
-      .get(`http://localhost:3001/books/${user.email}`)
+      .get(`${process.env.REACT_APP_URL}books/${user.email}`)
       .then((result) => {
         this.setState({
           BooksArr: result.data,
@@ -47,7 +47,7 @@ class Books extends React.Component {
     };
 
     axios
-      .post(`http://localhost:3001/addBook/${user.email}`, booksObj)
+      .post(`${process.env.REACT_APP_URL}addBook/${user.email}`, booksObj)
       .then((result) => {
         this.setState({
           BooksArr: result.data,
@@ -61,7 +61,7 @@ class Books extends React.Component {
   deleteBook = (id) => {
     const { user } = this.props.auth0;
     axios
-      .delete(`http://localhost:3001/deleteBook/${id}/${user.email}`)
+      .delete(`${process.env.REACT_APP_URL}deleteBook/${id}/${user.email}`)
       .then((result) => {
         this.setState({
           BooksArr: result.data,
@@ -102,12 +102,12 @@ class Books extends React.Component {
       email : user.email,
       name : user.name
     };
-
+    this.handleClose()
     const id = this.state.bookChosen._id;
     // console.log(id);
 
     axios
-      .put(`http://localhost:3001/updateBook/${id}/${user.email}`, booksObj)
+      .put(`${process.env.REACT_APP_URL}updateBook/${id}/${user.email}`, booksObj)
       .then((result) => {
         this.setState({
           BooksArr: result.data,
