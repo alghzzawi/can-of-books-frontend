@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-class SelecedBookUbdate extends React.Component {
+class SelectBookUpdate extends React.Component {
   render() {
     return (
       <Modal
@@ -64,4 +64,4 @@ class SelecedBookUbdate extends React.Component {
     );
   }
 }
-export default SelecedBookUbdate;
+export default SelectBookUpdate;

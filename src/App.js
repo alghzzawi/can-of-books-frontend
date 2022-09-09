@@ -4,9 +4,11 @@ import Profile from "./Profile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Header.js";
+import { withAuth0 } from "@auth0/auth0-react";
 
 class Books extends React.Component {
   render() {
+    const { isAuthenticated } = this.props.auth0;
     return (
       <>
         <Router>
@@ -17,11 +19,11 @@ class Books extends React.Component {
               element={
                 <>
                   <Header />
-                  <BestBooks />
+                  {isAuthenticated && <BestBooks />}
                 </>
               }
             ></Route>
-            <Route exact path="/profile" element={<Profile />}></Route>
+            <Route exact path="/profile" element={<> <Header />{isAuthenticated &&  <Profile />}</>}></Route>
           </Routes>
         </Router>
       </>
@@ -29,4 +31,4 @@ class Books extends React.Component {
   }
 }
 
-export default Books;
+export default withAuth0(Books);
