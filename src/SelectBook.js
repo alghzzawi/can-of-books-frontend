@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import "./BestBooks.css";
 
-class SelecedBook extends React.Component {
+class SelectBook extends React.Component {
   render() {
     return (
       <>
@@ -56,4 +56,4 @@ class SelecedBook extends React.Component {
   }
 }
 
-export default SelecedBook;
+export default SelectBook;
